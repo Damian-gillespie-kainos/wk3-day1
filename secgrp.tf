@@ -25,7 +25,7 @@ resource "aws_security_group" "kpa-secgrp-dg" {
     cidr_blocks = var.trusted_ips
   }
 
-  tags = {
+  tags = {                        # TAGS NEEDED
     Name = "kpa-secgrp-dg"
   }
 }

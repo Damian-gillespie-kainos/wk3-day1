@@ -12,6 +12,8 @@ terraform {
   }
 }
 
+# Add the provider and region specification
+
 provider "aws" {
   region = var.REGION
 }

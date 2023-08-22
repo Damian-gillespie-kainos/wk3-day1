@@ -1,10 +1,13 @@
+
+# Set up your virtural network, along with your subnets (Public and Private if needed), 
+# an internet gatway, route table and association
 resource "aws_vpc" "kpa-vpc-dg" {
   cidr_block           = "192.168.0.0/16"
   instance_tenancy     = "default"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
 
-  tags = {
+  tags = {                                 # TAGS NEEDED FOR VPC
     Name = "kpa-vpc-dg"
   }
 
@@ -27,7 +30,7 @@ resource "aws_subnet" "kpa-pub-sub-dg" {
 resource "aws_internet_gateway" "kpa-gw-dg" {
   vpc_id = aws_vpc.kpa-vpc-dg.id
 
-  tags = {
+  tags = {                                   # TAGS NEEDED FOR IGW
     Name = "kpa-gw-dg"
   }
 }
