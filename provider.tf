@@ -5,7 +5,7 @@ terraform {
       version = "~> 5.0"
     }
 
-    tls = {                          # TLS for keys
+    tls = { # TLS for keys
       source  = "hashicorp/tls"
       version = "~>4.0"
     }

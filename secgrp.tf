@@ -9,7 +9,7 @@ resource "aws_security_group" "kpa-secgrp-dg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
+  ingress { # Allow SSH from Kainos trusted IPs
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
@@ -17,7 +17,7 @@ resource "aws_security_group" "kpa-secgrp-dg" {
     cidr_blocks = var.trusted_ips
   }
 
-  ingress {
+  ingress { # Allow HTTP from Kainos trusted IPs
     description = "HTTP from VPC"
     from_port   = 80
     to_port     = 80
@@ -25,7 +25,24 @@ resource "aws_security_group" "kpa-secgrp-dg" {
     cidr_blocks = var.trusted_ips
   }
 
-  tags = {                        # TAGS NEEDED
+  tags = { # TAGS NEEDED
     Name = "kpa-secgrp-dg"
+  }
+}
+
+resource "aws_security_group" "kpa-rds-secgrp-dg" { # Specific secruity group needed for RDS
+  name   = "kpa-rds-secgrp-dg"
+  vpc_id = aws_vpc.kpa-vpc-dg.id
+
+  ingress {
+    description     = "Allow traffic from main secgrp"
+    from_port       = "3306"
+    to_port         = "3306"
+    protocol        = "tcp"
+    security_groups = [aws_security_group.kpa-secgrp-dg.id]
+  }
+
+  tags = {
+    Name = "kpa-rds-secgrp-dg"
   }
 }
